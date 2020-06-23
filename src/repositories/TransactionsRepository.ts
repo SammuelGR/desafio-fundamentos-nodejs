@@ -6,6 +6,12 @@ interface Balance {
 	total: number;
 }
 
+interface CreateTransactionDTIO {
+	title: string;
+	value: number;
+	type: 'income' | 'outcome';
+}
+
 class TransactionsRepository {
 	private transactions: Transaction[];
 
@@ -21,8 +27,14 @@ class TransactionsRepository {
 		// TODO
 	}
 
-	public create(): Transaction {
-		// TODO
+	public create({ title, value, type }: CreateTransactionDTIO): Transaction {
+		// validation to do
+
+		const transaction = new Transaction({ title, value, type });
+
+		this.transactions.push(transaction);
+
+		return transaction;
 	}
 }
 
