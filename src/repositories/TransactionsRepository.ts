@@ -24,12 +24,24 @@ class TransactionsRepository {
 	}
 
 	public getBalance(): Balance {
-		// TODO
+		let incomes = 0;
+		let outcomes = 0;
+
+		this.transactions.forEach(transaction => {
+			if (transaction.type === 'income') incomes += transaction.value;
+			else outcomes += transaction.value;
+		});
+
+		const balance = {
+			income: incomes,
+			outcome: outcomes,
+			total: incomes - outcomes,
+		};
+
+		return balance;
 	}
 
 	public create({ title, value, type }: CreateTransactionDTIO): Transaction {
-		// validation to do
-
 		const transaction = new Transaction({ title, value, type });
 
 		this.transactions.push(transaction);
