@@ -18,10 +18,9 @@ class CreateTransactionService {
 		if (!['income', 'outcome'].includes(type))
 			throw Error('Invalid transaction type');
 
-		const balance = this.transactionsRepository.getBalance();
+		const { total } = this.transactionsRepository.getBalance();
 
-		if (type === 'outcome' && balance.total - value < 0)
-			throw Error('Insufficient funds');
+		if (type === 'outcome' && value > total) throw Error('Insufficient funds');
 
 		const transaction = this.transactionsRepository.create({
 			title,
